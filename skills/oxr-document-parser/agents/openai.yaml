@@ -1,0 +1,5 @@
+interface:
+  display_name: "OXR Document Parser"
+  short_description: "Convert PDFs and images with OXR Batch"
+  brand_color: "#C23124"
+  default_prompt: "Use $oxr-document-parser to convert these documents into Markdown and JSON."

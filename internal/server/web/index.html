@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>OXR 排字间 · 文档批量转换</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="masthead">
+    <div class="issue">LOCAL EDITION · 01</div>
+    <a class="brand" href="/" aria-label="OXR 排字间首页">
+      <span>OXR</span><b>排字间</b>
+    </a>
+    <div class="date" id="today"></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="kicker"><span>DOCUMENT → KNOWLEDGE</span></p>
+      <h1>把一摞纸，<br><em>排成可用的数据。</em></h1>
+      <p class="dek">批量送入 PDF 与扫描图片。大书自动拆页、识别、重排，再合订为 Markdown、JSON 与本地插图。</p>
+      <div class="rule"><span>01</span><i></i><span>投 稿</span></div>
+    </section>
+
+    <section class="workbench">
+      <form id="job-form">
+        <label class="dropzone" id="dropzone">
+          <input id="files" name="files" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.bmp,.tif,.tiff,.jp2,.gif,.heic,.heif">
+          <span class="drop-index">A</span>
+          <span class="drop-title">拖入文档</span>
+          <span class="drop-sub">或点击选择 · PDF / JPG / PNG / WEBP</span>
+          <span class="file-count" id="file-count">尚未选稿</span>
+        </label>
+
+        <fieldset class="mode-switch" aria-label="服务模式">
+          <legend>选择印厂</legend>
+          <label class="mode-card">
+            <input type="radio" name="mode" value="free" checked>
+            <span><i>01</i><b>免费 OXR</b><small>排队处理 · 无需密钥 · 适合试用</small></span>
+          </label>
+          <label class="mode-card">
+            <input type="radio" name="mode" value="api">
+            <span><i>02</i><b>正式 API</b><small>生产服务 · 高并发 · 需要 sk- 密钥</small></span>
+          </label>
+        </fieldset>
+
+        <div class="settings">
+          <div class="setting wide">
+            <label for="base-url">OXR 服务地址</label>
+            <input id="base-url" name="base_url" value="https://free-oxr.somark.cn/api/v1" spellcheck="false">
+          </div>
+          <div class="setting">
+            <label for="api-key">API Key</label>
+            <input id="api-key" name="api_key" value="dummy" type="password" autocomplete="off">
+          </div>
+          <div class="setting compact">
+            <label for="chunk-pages">每册页数</label>
+            <input id="chunk-pages" name="chunk_pages" value="20" type="number" min="1" max="300">
+          </div>
+          <div class="setting compact">
+            <label for="workers">并行数</label>
+            <input id="workers" name="workers" value="1" type="number" min="1" max="4">
+          </div>
+          <label class="check"><input name="localize_images" type="checkbox" checked><span>把临时插图保存到本地</span></label>
+          <label class="check"><input name="keep_header_footer" type="checkbox"><span>保留页眉与页脚</span></label>
+        </div>
+
+        <div class="submit-row">
+          <p id="mode-note">免费服务未公开上限，默认 20 页/册、单任务排队，遇到繁忙会自动等待。</p>
+          <button id="submit" type="submit"><span>开始排印</span><b>→</b></button>
+        </div>
+      </form>
+    </section>
+
+    <section class="ledger">
+      <div class="rule"><span>02</span><i></i><span>工 单</span></div>
+      <div class="ledger-head"><span>文件 / 批次</span><span>进度</span><span>状态 / 成品</span></div>
+      <div id="jobs" class="jobs"><div class="empty">等待第一份文档进入排字间。</div></div>
+    </section>
+  </main>
+
+  <footer><span>OXR BATCH / GO</span><span>文件经本机分册后发送至你配置的 OXR 服务</span></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
